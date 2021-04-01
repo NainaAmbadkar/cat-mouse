@@ -1,59 +1,43 @@
-var canvas;
-var block1,block2,block3,block4;
-var ball, edges;
-var music;
+var fixedRect, movingRect;
+var gameObject1, gameObject2, gameObject3, gameObject4;
 
-function preload(){
-    music = loadSound("music.mp3");
-}
+function setup() {
+  createCanvas(1200,800);
+  fixedRect = createSprite(400, 100, 50, 80);
+  fixedRect.shapeColor = "green";
+  fixedRect.debug = true;
+  movingRect = createSprite(400, 800,80,30);
+  movingRect.shapeColor = "green";
+  movingRect.debug = true;
 
+  gameObject1 = createSprite(100, 100, 50, 50);
+  gameObject1.shapeColor = "green";
+  gameObject2 = createSprite(200, 100, 50, 50);
+  gameObject2.shapeColor = "green";
+  gameObject3 = createSprite(300, 100, 50, 50);
+  gameObject3.shapeColor = "green";
+  gameObject4 = createSprite(400, 100, 50, 50);
+  gameObject4.shapeColor = "green";
 
-function setup(){
-    canvas = createCanvas(800,600);
-
-    block1 = createSprite(0,580,360,30);
-    block1.shapeColor = rgb(0,0,255);
-
-    block2 = createSprite(295,580,200,30);
-    block2.shapeColor = rgb(255,128,0);
-
-    block3 = createSprite(515,580,200,30);
-    block3.shapeColor = rgb(153,0,76);
-
-    block4 = createSprite(740,580,220,30);
-    block4.shapeColor = rgb(0,100,0);
-
-    ball = createSprite(random(20,750),100, 40,40);
-    ball.shapeColor = rgb(255,255,255);
-    ball.velocityX = 4;
-    ball.velocityY = 9;
-
+  movingRect.velocityY = -5;
+  fixedRect.velocityY = +5;
 }
 
 function draw() {
-    background(rgb(169,169,169));
-    edges=createEdgeSprites();
-    ball.bounceOff(edges);
+  background(0,0,0);  
 
-    if(block1.isTouching(ball) && ball.bounceOff(block1)){
-        ball.shapeColor = rgb(0,0,255);
-        music.play();
-    }
+  bounceOff(movingRect,fixedRect);
 
-    if(block2.isTouching(ball)){
-        ball.shapeColor = rgb(255,128,0);
-        ball.velocityX = 0;
-        ball.velocityY = 0;
-        music.stop();
-    }
-
-    if(block3.isTouching(ball) && ball.bounceOff(block3)){
-        ball.shapeColor = rgb(153,0,76);
-    }
-
-    if(block4.isTouching(ball) && ball.bounceOff(block4)){
-        ball.shapeColor = rgb(0,100,0);
-    }
-
-    drawSprites();
+  if(isTouching(movingRect, gameObject1)){
+    movingRect.shapeColor = "blue";
+    gameObject1.shapeColor = "blue";
+  }
+  else {
+    movingRect.shapeColor = "green";
+    gameObject1.shapeColor = "green";
+  }
+  drawSprites();
 }
+
+
+
